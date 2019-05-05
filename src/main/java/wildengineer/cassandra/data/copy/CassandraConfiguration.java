@@ -81,14 +81,14 @@ public class CassandraConfiguration {
 		JdkSSLOptions sslOptions = RemoteEndpointAwareJdkSSLOptions.builder()
 				.withSSLContext(sc)
 				.build();
-		cluster.getConfiguration().getPoolingOptions().setMaxConnectionsPerHost(HostDistance.LOCAL, 64);
-		cluster.getConfiguration().getPoolingOptions().setMaxConnectionsPerHost(HostDistance.REMOTE, 16);
 		cluster = Cluster.builder()
 				.addContactPoint(cassandraHost)
 				.withPort(cassandraPort)
 				.withCredentials(cassandraUsername, cassandraPassword)
 				.withSSL(sslOptions)
 				.build();
+        cluster.getConfiguration().getPoolingOptions().setMaxConnectionsPerHost(HostDistance.LOCAL, 64);
+        cluster.getConfiguration().getPoolingOptions().setMaxConnectionsPerHost(HostDistance.REMOTE, 16);
 		System.out.println("get keyspace: " + keyspace);
 		return cluster.connect(cassandraProperties.getKeyspace());
 	}
@@ -106,7 +106,7 @@ public class CassandraConfiguration {
 		if (ssl_keystore_file_path == null || ssl_keystore_file_path.isEmpty()) {
 			//String javaHomeDirectory = System.getenv("JAVA_HOME");
 			//String javaHomeDirectory = "C:\\Program Files\\java\\jdk1.8.0_25";
-			String javaHomeDirectory = "/usr/lib/jvm/java-8-openjdk-amd64/";
+			String javaHomeDirectory = "/usr/lib/jvm/java-8-openjdk-amd64";
 			if (javaHomeDirectory == null || javaHomeDirectory.isEmpty()) {
 				throw new Exception("JAVA_HOME not set");
 			}
