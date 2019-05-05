@@ -86,6 +86,7 @@ public class CassandraConfiguration {
 				.withPort(cassandraPort)
 				.withCredentials(cassandraUsername, cassandraPassword)
 				.withSSL(sslOptions)
+				.withoutJMXReporting()
 				.build();
         cluster.getConfiguration().getPoolingOptions().setMaxConnectionsPerHost(HostDistance.LOCAL, 64);
         cluster.getConfiguration().getPoolingOptions().setMaxConnectionsPerHost(HostDistance.REMOTE, 16);
