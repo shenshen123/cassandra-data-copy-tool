@@ -17,7 +17,6 @@ import java.security.KeyStore;
 /**
  * Created by wildengineer on 6/12/16.
  */
-
 @Configuration
 public class CassandraConfiguration {
 
