@@ -67,7 +67,7 @@ public class TableDataCopier {
                         columnDefinitions.stream().map(ColumnDefinitions.Definition::getName)
                                 .collect(Collectors.toList()));
 
-                LOGGER.debug("Built insert statement: {}", insertStatement.toString());
+                LOGGER.info("Built insert statement: {}", insertStatement.toString());
             }
 
             rowsToIngest.add(columnDefinitions.stream().map(cd -> getValue(row, cd)).collect(Collectors.toList()));

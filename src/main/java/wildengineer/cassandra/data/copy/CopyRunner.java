@@ -65,12 +65,12 @@ public class CopyRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        LOGGER.debug("Copying data for tables: {}", copyProperties.getTables());
+        LOGGER.info("Copying data for tables: {}", copyProperties.getTables());
 
         List<Pair<String, String>> tablePairs = getTablePairs();
 
         if (LOGGER.isDebugEnabled()) {
-            tablePairs.forEach(p -> LOGGER.debug("Source: {} Destination: {}", p.getLeft(), p.getRight()));
+            tablePairs.forEach(p -> LOGGER.info("Source: {} Destination: {}", p.getLeft(), p.getRight()));
         }
 
         TableDataCopier tableDataCopier = new TableDataCopier(sourceSession, destinationSession, copyProperties);
@@ -78,7 +78,7 @@ public class CopyRunner implements CommandLineRunner {
             Set<String> ignoreSet = ignoreMap.get(tablePair.getLeft());
             tableDataCopier.copy(tablePair.getLeft(), tablePair.getRight(), ignoreSet);
         }
-        LOGGER.debug("Finished data for tables: {}", copyProperties.getTables());
+        LOGGER.info("Finished data for tables: {}", copyProperties.getTables());
     }
 
     private List<Pair<String, String>> getTablePairs() {
