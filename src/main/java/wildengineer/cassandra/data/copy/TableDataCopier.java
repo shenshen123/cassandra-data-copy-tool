@@ -1,6 +1,7 @@
 package wildengineer.cassandra.data.copy;
 
 import com.datastax.driver.core.*;
+import com.datastax.driver.core.querybuilder.Clause;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
 import com.google.common.util.concurrent.RateLimiter;
@@ -42,8 +43,10 @@ public class TableDataCopier {
     public void copy(String fromTable, String toTable, Set<String> ignoreColumns) throws Exception {
 
         LOGGER.info("Copying data from table {} to table {}", fromTable, toTable);
-
         Select selectFromCustomer = QueryBuilder.select().from(fromTable);
+        if (!fromTable.equals("department") && fromTable.equals("item_gtin_map")) {
+            selectFromCustomer.where().and(QueryBuilder.eq("nodeid", 5513));
+        }
         ResultSet rs = sourceSession.execute(selectFromCustomer);
         List<List<?>> rowsToIngest = new ArrayList<>();
         List<ColumnDefinitions.Definition> columnDefinitions = null;
@@ -71,6 +74,8 @@ public class TableDataCopier {
             }
 
             rowsToIngest.add(columnDefinitions.stream().map(cd -> getValue(row, cd)).collect(Collectors.toList()));
+
+            System.out.println("rowsToIngest.size(): " + rowsToIngest.size());
 
             if (rowsToIngest.size() >= tuningParams.getBatchSize()) {
                 List<List<?>> copyOfRowsToIngest = new ArrayList<>(rowsToIngest);
