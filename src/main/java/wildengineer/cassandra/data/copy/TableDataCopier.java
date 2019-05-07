@@ -44,8 +44,8 @@ public class TableDataCopier {
 
         LOGGER.info("Copying data from table {} to table {}", fromTable, toTable);
         Select selectFromCustomer = QueryBuilder.select().from(fromTable);
-        if (!fromTable.equals("department") && fromTable.equals("item_gtin_map")) {
-            selectFromCustomer.where().and(QueryBuilder.eq("nodeid", 5513));
+        if (!fromTable.equals("department") && !fromTable.equals("item_gtin_map")) {
+            selectFromCustomer.where().and(QueryBuilder.eq("nodeid", 4969)).allowFiltering();
         }
         ResultSet rs = sourceSession.execute(selectFromCustomer);
         List<List<?>> rowsToIngest = new ArrayList<>();
@@ -74,8 +74,6 @@ public class TableDataCopier {
             }
 
             rowsToIngest.add(columnDefinitions.stream().map(cd -> getValue(row, cd)).collect(Collectors.toList()));
-
-            System.out.println("rowsToIngest.size(): " + rowsToIngest.size());
 
             if (rowsToIngest.size() >= tuningParams.getBatchSize()) {
                 List<List<?>> copyOfRowsToIngest = new ArrayList<>(rowsToIngest);
