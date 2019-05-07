@@ -55,6 +55,7 @@ public class TableDataCopier {
         for (Row row : rs) {
 
             int availableWithoutFetching = rs.getAvailableWithoutFetching();
+            LOGGER.info("availableWithoutFetching: " +availableWithoutFetching);
             if (availableWithoutFetching <= tuningParams.getQueryPageSize() && !rs.isFullyFetched()) {
                 rs.fetchMoreResults(); // async fetch
             }
