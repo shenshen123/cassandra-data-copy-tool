@@ -45,7 +45,6 @@ public class TableDataCopier {
 
         Select selectFromCustomer = QueryBuilder.select().from(fromTable);
         ResultSet rs = sourceSession.execute(selectFromCustomer);
-        System.out.println("rs size：" + rs.all().size());
         List<List<?>> rowsToIngest = new ArrayList<>();
         List<ColumnDefinitions.Definition> columnDefinitions = null;
         PreparedStatement insertStatement = null;
