@@ -45,6 +45,7 @@ public class TableDataCopier {
 
         Select selectFromCustomer = QueryBuilder.select().from(fromTable);
         ResultSet rs = sourceSession.execute(selectFromCustomer);
+        System.out.println("rs size：" + rs.all().size());
         List<List<?>> rowsToIngest = new ArrayList<>();
         List<ColumnDefinitions.Definition> columnDefinitions = null;
         PreparedStatement insertStatement = null;
@@ -55,7 +56,6 @@ public class TableDataCopier {
         for (Row row : rs) {
 
             int availableWithoutFetching = rs.getAvailableWithoutFetching();
-            LOGGER.info("availableWithoutFetching: " +availableWithoutFetching);
             if (availableWithoutFetching <= tuningParams.getQueryPageSize() && !rs.isFullyFetched()) {
                 rs.fetchMoreResults(); // async fetch
             }
