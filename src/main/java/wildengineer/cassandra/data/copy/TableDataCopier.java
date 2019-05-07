@@ -1,7 +1,6 @@
 package wildengineer.cassandra.data.copy;
 
 import com.datastax.driver.core.*;
-import com.datastax.driver.core.querybuilder.Clause;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
 import com.google.common.util.concurrent.RateLimiter;
