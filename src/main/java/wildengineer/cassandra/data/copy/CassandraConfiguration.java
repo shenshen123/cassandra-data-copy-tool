@@ -49,7 +49,11 @@ public class CassandraConfiguration {
         //Turning off jmx reporting, since we don't need it and we don't want to bring in any unnecessary dependencies
         //See https://docs.datastax.com/en/developer/java-driver/3.5/manual/metrics/#metrics-4-compatibility
         final SocketOptions socketOptions = new SocketOptions();
-        socketOptions.setConnectTimeoutMillis(50000000).setReadTimeoutMillis(120000000);
+        socketOptions.setConnectTimeoutMillis(500000000).setReadTimeoutMillis(1200000000);
+
+        socketOptions.setKeepAlive(true);
+
+        //socketOptions.setReceiveBufferSize()
 
         Cluster cluster = Cluster.builder()
                 .addContactPoints(cassandraProperties.getContactPoints().split(","))
