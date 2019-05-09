@@ -21,6 +21,9 @@ public class TableDataCopier {
 
     private static Logger LOGGER = LogManager.getLogger(TableDataCopier.class);
 
+    @Autowired
+    private CopyProperties copyProperties;
+
     private final Session sourceSession;
     private final Session destinationSession;
     private final TuningParams tuningParams;
@@ -44,7 +47,7 @@ public class TableDataCopier {
         LOGGER.info("Copying data from table {} to table {}", fromTable, toTable);
         Select selectFromCustomer = QueryBuilder.select().from(fromTable);
         if (!fromTable.equals("department") && !fromTable.equals("item_gtin_map")) {
-            selectFromCustomer.where().and(QueryBuilder.eq("nodeid", 4969)).allowFiltering();
+            selectFromCustomer.where().and(QueryBuilder.eq("nodeid", tuningParams.getNodeid())).allowFiltering();
         }
         ResultSet rs = sourceSession.execute(selectFromCustomer);
         List<List<?>> rowsToIngest = new ArrayList<>();

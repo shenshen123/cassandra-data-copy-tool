@@ -1,8 +1,13 @@
 package wildengineer.cassandra.data.copy;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by wildengineer on 5/29/16.
  */
+@Getter
+@Setter
 public class TuningParams {
 
 	private static final int DEFAULT_BATCH_SIZE = 20000; //SIZE OF BATCH TO COPY AT ONCE
@@ -13,27 +18,8 @@ public class TuningParams {
 	private int queryPageSize = DEFAULT_QUERY_PAGE_SIZE;
 	private int batchesPerSecond = DEFAULT_BATCHES_PER_SECOND;
 
-	public int getBatchSize() {
-		return batchSize;
-	}
+	private int nodeid;
 
-	public void setBatchSize(int batchSize) {
-		this.batchSize = batchSize;
-	}
 
-	public int getQueryPageSize() {
-		return queryPageSize;
-	}
 
-	public void setQueryPageSize(int queryPageSize) {
-		this.queryPageSize = queryPageSize;
-	}
-
-	public int getBatchesPerSecond() {
-		return batchesPerSecond;
-	}
-
-	public void setBatchesPerSecond(int batchesPerSecond) {
-		this.batchesPerSecond = batchesPerSecond;
-	}
 }
